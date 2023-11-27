@@ -55,8 +55,8 @@ public function updateauto($matricula,$marca,$modelo,$color,$tipo,$propietario) 
     
     }
 
- public function deleteauto($matricula) {
-        $sql="DELETE FROM  vehiculos  WHERE matricula='$matricula'";
+ public function deleteauto($id) {
+        $sql="DELETE FROM  vehiculos  WHERE id='$id'";
           mysqli_query($this->conexion,$sql);
         $resultado=['success', 'registro BORRADO'];
         return $resultado;

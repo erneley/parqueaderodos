@@ -3,33 +3,7 @@
 <?php
 include_once("./templates/head.php");
 
-/*
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
-private String nitcliente;
-private String nombre;
-private String correo;
-private String direccion;
-private String telefono;
-private String ciudad;
-
-
-
-@Entity
-public class Vehiculos {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nitcliente;
-    private String placa;
-    private String fechaentrada;
-    private String horaentrada;
-    private String horasalida;
-    private String ensitio;
-    private String valorparqeuo;
-*/
 ?>
 
 
@@ -39,26 +13,93 @@ include_once("./templates/header.php");
 
 ?>
 
-    <div class="container" id="central">
-     <div id="izq"><h2>los menus</h2>
+    <div id="central">
+
+     <div class="" id="izq">
+
+
+<br>
+
+
+<img src='./img/logo1.jpg' style= "height: 100px; width: 90%;">   
+<br>
+<br><br>
+     <h2>Menu principal</h2>
     
-    <a class="btn btn-primary" href="#">Clientes</a> <br><br>
-    <a class="btn btn-primary" href="#">Listado Clientes</a><br><br>
-    <a class="btn btn-primary" href="#">Vehiculos</a><br><br>
-    <a class="btn btn-primary" href="#">Listado vehiculos</a><br><br>
-    <a class="btn btn-primary" href="#">Ingreso de vehiculos</a><br><br>
-    <a class="btn btn-primary" href="#">Salida vehiculos</a><br>
-    <a class="btn btn-primary" href="#">Consulta vehiculos en patio</a><br><br>
-    
+    <br>
    
+     <div class="d-grid gap-2" style="width: 12rem;">
+
+     <a class="btn btn-primary" href="?cl=1">Clientes</a> 
+     <a class="btn btn-primary" href="?cl=2">Vehiculos</a>
+ <a class="btn btn-primary" href="?cl=4">Ingreso Y salida</a>
+ <a class="btn btn-primary" href="?cl=3">Control Celdas</a>
+ <a class="btn btn-primary" href="?cl=8">Vehiculos en patio</a>
+ <a class="btn btn-primary" href="#">Registro de pagos</a>
+
+
+</div>
+<br>
+<br>
+
+
+  
 
     </div>
      <div id="der">
-        <img src="./img/parqueadero.jpg" alt="">
+
+      <!--  <img src="./img/parqueadero.jpg" alt="">!-->
+     
+<?php
+       if (isset($_GET['cl']) and $_GET['cl']==1){
+
+            include_once("vistaclientes.php");
+           
+        } else
+
+        if (isset($_GET['cl']) and $_GET['cl']==2){
+
+            include_once("vistavehiculos.php");
+            
+        }else
+        if (isset($_GET['cl']) and $_GET['cl']==4){
+
+            include_once("vistaingresosalida.php");
+            
+        }else
+        if (isset($_GET['cl']) and $_GET['cl']==3){
+
+            include_once("vistaceldas.php");
+            
+        }else
+
+        if (isset($_GET['cl']) and $_GET['cl']==5){
+
+            include_once("editclientes.php");
+            
+        }else if (isset($_GET['cl']) and $_GET['cl']==6){
+
+            include_once("editvehiculo.php");
+            
+        }else if (isset($_GET['cl']) and $_GET['cl']==7){
+
+            include_once("acerca.php");
+            
+        }else if (isset($_GET['cl']) and $_GET['cl']==8){
+
+            include_once("vistaparqueados.php");
+            
+        }
+ ?>       
      </div>
 
     </div>
    
-    <footer th:replace="/template  :: footer" ></footer>
+    <?php
+include_once("./templates/footer.php");
+
+
+?>
+
 </body>
 </html>

@@ -1,12 +1,14 @@
 <?php
 header('content-type: application/json; charset=utf-8');
 require 'clientemodelo.php';
+
 $clientemodelo= new clienteModelo();
 switch($_SERVER['REQUEST_METHOD']){
     CASE 'GET':
+    
     if (isset($_GET['nitcliente']) ){
-        $respuesta= $clientemodelo->getClientesId($_GET['nitcliente']);
-
+       $respuesta= $clientemodelo->getClientesId($_GET['nitcliente']);
+       
         
     }else
         {
@@ -18,11 +20,17 @@ echo json_encode($respuesta);
         break;
 
         CASE 'POST':
+        /*$respuesta=['error','debe ingresar un nombre'];
+        echo json_encode($respuesta);
+        return($respuesta);*/
+
+
          $_POST=json_decode(file_get_contents('php://input',true));
          if (!isset($_POST->nitcliente) || is_null($_POST->nitcliente)){
-            $respuesta=['error','debe ingresar una identificacion'];
+            $respuesta=['error',$_POST->nitcliente];
+            return($respuesta);
          }
-         else if (!isset($_POST->nombre) || is_null($_POST->nombre)){
+         else if (!isset($_POST->nitcliente) || is_null($_POST->nitcliente)){
             $respuesta=['error','debe ingresar un nombre'];
          }
          else{

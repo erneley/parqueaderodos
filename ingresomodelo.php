@@ -37,17 +37,22 @@ return $cliente;
 
 
 
-public function saveingreso($matricula,$observacion){
-    //$sql="select  * from vehiculos where matricula='$matricula'";
-    //$registros=mysqli_query($this->conexion,$sql);
-    //if ($row=mysqli_fetch_array($registros)){
+public function saveingreso($matricula,$celda,$observacion){
+    $sql="select  * from celdas where id='$celda' and estado='libre'";
+    $registros=mysqli_query($this->conexion,$sql);
+    if ($row=mysqli_fetch_array($registros)){
         $hora= date('h:i:s A');
-        $fecha = date("m.d.y"); 
-        $ensitio=1;
-        $sql="insert into ingreso(matricula,fechaingreso,horaingreso,ensitio,observacion) values('$matricula','$fecha','$hora','$ensitio','$observacion')";
+        $fecha = date("Ymd") ;//date("m.d.y"); 
+        $ensitio="si";
+        $sql="insert into ingreso(matricula,celda,fechaingreso,horaingreso,ensitio,observacion) values('$matricula',$celda,'$fecha','$hora','$ensitio','$observacion')";
         mysqli_query($this->conexion,$sql);
-$resultado=['success', 'registro guardado'];
-
+        $sql="update celdas set estado='ocupado' where id=$celda";
+        mysqli_query($this->conexion,$sql);
+        
+$resultado=['success', 'registro guardado'];}
+    else {
+        $resultado=['error', 'La celda no esta disponible'];
+    }
         
    // }
 return $resultado;
@@ -57,11 +62,28 @@ return $resultado;
 //horasalida='$hora',ensitio=$ensitio,
 public function updateingreso($matricula,$observacion){
         $hora= date('h:i:s A');
-        $fecha = date("m.d.y"); 
-        $ensitio=0;
-        $sql="UPDATE ingreso SET fechasalida='$fecha',observacion='$observacion',horasalida='$hora',ensitio=$ensitio WHERE matricula='$matricula' && ensitio=1";
+        $fecha = date("Ymd"); 
+        $ensitio="no";
+        $sit="si";
+
+        $sql="select  * from ingreso where ensitio='si' and matricula='$matricula' ";
+        $registros=mysqli_query($this->conexion,$sql);
+        if ($row=mysqli_fetch_array($registros)){
+            $cel=$row['celda'] ;
+
+        $sql="UPDATE ingreso SET fechasalida='$fecha',observacion='$observacion',horasalida='$hora',ensitio='$ensitio' WHERE matricula='$matricula' && ensitio='si'";
         mysqli_query($this->conexion,$sql);
-$resultado=['success', 'registro guardado'];
+        
+        
+        $sql="update celdas set estado='libre' where id='$cel'";
+        mysqli_query($this->conexion,$sql);
+        
+        $resultado=['success',$cel];
+        }
+        else{
+            $resultado=['error', 'vehiculo errado no se encuentra en el sitio'];
+        }
+
 
         
    
